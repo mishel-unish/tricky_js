@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<title>Tricky parts of Javascript</title>
+	</head>
+	<body>
+		<nav class="navbar sticky-top navbar-expand">
+			<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+			<h1 class="navbar-brand mr-auto">
+				Tricky JS
+			</h1>
+
+			<a href="index.html">Table of Contents</a>
+		</nav>
+		<div class="container-fluid mt-0">
+			<div class="row">
+				<div class="col-6">
+					<a class="next-prev-nav" href="1.html">
+						<span class="nav-arrow">&laquo;</span> Previous
+					</a>
+				</div>
+				<div class="col-6 text-right">
+					<a class="next-prev-nav" href="3.html">
+						Next <span class="nav-arrow">&raquo;</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="container mt-5">
+			<div class="row">
+				<h2 class="h3 col-12 mb-5">Behavior of array length property</h2>
+				<div class="col-12 mb-3">
+					<h3 class="h4">Question</h3>
+					<p>
+						What is the value of <code>clothes[0]</code>:
+					</p>
+<pre class="jumbotron"><code>
+const clothes = ['jacket', 't-shirt'];
+clothes.length = 0;
+
+clothes[0]; // => ???
+</code></pre>
+					<h3 class="h4">Answer</h3>
+					<p>
+						<code>length</code> property of the array object has a special behavior.
+					</p>
+					<blockquote class="blockquote">
+						Reducing the value of the <code>length</code> property has the side-effect of deleting own array elements whose array index is between the old and new length values.
+					</blockquote>
+					<p>
+						As a result when JavaScript executes <code>clothes.length = 0</code>, all clothes items are deleted.
+					</p>
+					<p>
+						<code>clothes[0]</code> is <code>undefined</code>, because clothes <code>array</code> has been emptied.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const clothes = ['jacket', 't-shirt'];
+			console.log(clothes[0]);
+
+			clothes.length = 0;
+			console.log(clothes[0]);
+		</script>
+	</body>
+</html>
