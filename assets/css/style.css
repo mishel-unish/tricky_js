@@ -1,0 +1,47 @@
+:root {
+	--yellow: #f0db4f;
+	--black: #323330;
+	--code-color: #9F5225;
+}
+
+body {
+	color: var(--black);
+}
+
+.navbar {
+	background-color: var(--yellow);
+	border: 2px solid var(--black);
+}
+
+.navbar-brand {
+	font-size: 35px;
+}
+
+.jumbotron {
+	padding: 1rem;
+	color: var(--code-color);
+}
+
+code {
+	background-color: #e9ecef;
+	padding: 0 .5rem;
+}
+
+.code-highlight {
+	background-color: #ffc3a7;
+	padding: 0 .25rem;
+}
+
+.nav-arrow {
+	font-size: 19px;
+}
+
+.next-prev-nav {
+	/* border-bottom: 2px solid #0056b3; */
+	color: #0056b3;
+}
+
+.next-prev-nav:hover {
+	text-decoration: none;
+	border-bottom: 2px solid #0056b3;
+}

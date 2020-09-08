@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<title>Tricky parts of Javascript</title>
+	</head>
+	<body>
+		<nav class="navbar sticky-top navbar-expand">
+			<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+			<h1 class="navbar-brand mr-auto">
+				Tricky JS
+			</h1>
+
+			<a href="index.html">Table of Contents</a>
+		</nav>
+		<div class="container-fluid mt-0">
+			<div class="row">
+				<div class="col-6">
+					<a class="next-prev-nav" href="index.html">
+						<span class="nav-arrow">&laquo;</span> Previous
+					</a>
+				</div>
+				<div class="col-6 text-right">
+					<a class="next-prev-nav" href="2.html">
+						Next <span class="nav-arrow">&raquo;</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="container mt-5">
+			<div class="row">
+				<h2 class="h3 col-12 mb-5">Accidental global variable</h2>
+				<div class="col-12 mb-3">
+					<h3 class="h4">Question</h3>
+					<p>To what evaluates <code>typeof a</code> and <code>typeof b</code> in the following snippet:</p>
+<pre class="jumbotron"><code>
+function foo() {
+   let a = b = 0;
+   a++;
+   return a;
+}
+
+foo();
+typeof a; // => ???
+typeof b; // => ???
+</code></pre>
+					<h3 class="h4">Answer</h3>
+					<p>
+						Let’s look at the line 2: <code>let a = b = 0</code>. This statement declares a local variable <code>a</code>. However, it does declare a global variable <code>b</code>.
+					</p>
+					<p>
+						No variable <code>b</code> is declared neither in the <code>foo()</code> scope or global scope. So JavaScript interprets <code>b = 0</code> expression as <code>window.b = 0</code>.
+					</p>
+					<p>
+						In other words, <code>b</code> is a global variable created accidentally.
+					</p>
+					<p>
+						In a browser, the above code snippet is equivalent to:
+					</p>
+<pre class="jumbotron"><code>
+function foo() {
+   let a;
+   window.b = 0;
+   a = window.b;
+   a++;
+   return a;
+}
+
+foo();
+typeof a;        // => 'undefined'
+typeof window.b; // => 'number'
+</code></pre>
+					<p>
+						<code>typeof a</code> is <code>'undefined'</code>. The variable <code>a</code> exists within <code>foo()</code> scope and not available in the outside scope.
+					</p>
+					<p>
+						Because <code>b</code> is a global variable with the value <code>0</code>, the <code>typeof b</code> evaluates to <code>'number'</code>.
+					</p>
+					<p>
+						Below are some other ways of accidental global variables.
+					</p>
+<pre class="jumbotron"><code>
+function foo(count) {
+   for (<span class="code-highlight">i = 0;</span> i < count; i++) {
+		//...
+	}
+	//...
+}
+</code></pre>
+<pre class="jumbotron"><code>
+function foo() {
+   <span class="code-highlight">i = 0;</span>
+}
+</code></pre>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function foo() {
+				let a = b = 0;
+				a++;
+				return a;
+			}
+
+			foo();
+			console.log(typeof a);
+			console.log(typeof b);
+		</script>
+	</body>
+</html>
