@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<title>Tricky parts of Javascript</title>
+	</head>
+	<body>
+		<nav class="navbar sticky-top navbar-expand">
+			<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+			<h1 class="navbar-brand mr-auto">
+				Tricky JS
+			</h1>
+
+			<a href="index.html">Table of Contents</a>
+		</nav>
+		<div class="container-fluid mt-0">
+			<div class="row">
+				<div class="col-6">
+					<a class="next-prev-nav" href="index.html">
+						<span class="nav-arrow">&laquo;</span> Previous
+					</a>
+				</div>
+				<div class="col-6 text-right">
+					<a class="next-prev-nav" href="2.html">
+						Next <span class="nav-arrow">&raquo;</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="container mt-5">
+			<div class="row">
+				<h2 class="h3 col-12 mb-5">4. Automatic semicolon insertion</h2>
+				<div class="col-12 mb-3">
+					<h3 class="h4">Question</h3>
+					<p>
+						What value is returned by <code>arrayFromValue()</code>?
+					</p>
+<pre class="jumbotron"><code>
+function arrayFromValue(item) {
+   return
+      [item];
+}
+
+console.log(arrayFromValue(10)); // => ???
+</code></pre>
+					<h3 class="h4">Answer</h3>
+					<p>
+						It’s easy to miss the new line between the <code>return</code> keyword and <code>[item]</code> expression.
+					</p>
+					<p>
+						However, this newline makes the JavaScript automatically insert a semicolon between <code>return</code> and <code>[item]</code> expression.
+					</p>
+					<p>
+						Here’s an equivalent code with the semicolon inserted after <code>return</code>:
+					</p>
+<pre class="jumbotron"><code>
+function arrayFromValue(item) {
+   <span class="code-highlight">return;</span>
+      [item];
+}
+
+console.log(arrayFromValue(10)); // => undefined
+</code></pre>
+					<p>
+						<code>return;</code> inside the function makes it return <code>undefined</code>.
+					</p>
+					<p>
+						So <code>arrayFromValue(10)</code> evaluates to <code>undefined</code>.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function arrayFromValue(item) {
+				return
+					[item];
+			}
+
+			console.log(arrayFromValue(10));
+		</script>
+	</body>
+</html>
