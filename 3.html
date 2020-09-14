@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<title>Tricky parts of Javascript</title>
+	</head>
+	<body>
+		<nav class="navbar sticky-top navbar-expand">
+			<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+			<h1 class="navbar-brand mr-auto">
+				Tricky JS
+			</h1>
+
+			<a href="index.html">Table of Contents</a>
+		</nav>
+		<div class="container-fluid mt-0">
+			<div class="row">
+				<div class="col-6">
+					<a class="next-prev-nav" href="2.html">
+						<span class="nav-arrow">&laquo;</span> Previous
+					</a>
+				</div>
+				<div class="col-6 text-right">
+					<a class="next-prev-nav" href="4.html">
+						Next <span class="nav-arrow">&raquo;</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="container mt-5">
+			<div class="row">
+				<h2 class="h3 col-12 mb-5">3. Eagle eye test</h2>
+				<div class="col-12 mb-3">
+					<h3 class="h4">Question</h3>
+					<p>
+						What is the content of <code>numbers</code> array:
+					</p>
+<pre class="jumbotron"><code>
+const length = 4;
+const numbers = [];
+for (var i = 0; i &lt; length; i++); {
+	numbers.push(i + 1);
+}
+
+console.log(numbers); // => ???
+</code></pre>
+					<h3 class="h4">Answer</h3>
+					<p>
+						Let’s take a closer look at the semicolon <code>;</code> that appears right before the opening curly brace <code>{</code>:
+					</p>
+					<p class="text-center">
+						<img
+							class="img-fluid"
+							src="./assets/images/for-and-null-statement-pitfall.webp"
+							alt="for and null statement pitfall"
+							style="max-width: 600px;">
+					</p>
+					<p>
+						Being easily overlooked, this semicolon creates a null statement. The <i>null statement</i> is an empty statement that does nothing.
+					</p>
+					<p>
+						<code>for()</code> iterates 4 times over the null statement (that does nothing), ignoring the block that actually pushes items to array: <code>{ numbers.push(i + 1); }</code>.
+					</p>
+					<p>
+						The above code is equivalent to the following:
+					</p>
+<pre class="jumbotron"><code>
+const length = 4;
+const numbers = [];
+var i;
+for (i = 0; i &lt; length; i++) {
+	// does nothing
+}
+{
+	// a simple block
+	numbers.push(i + 1);
+}
+
+console.log(numbers); // => [5]
+</code></pre>
+					<p>
+						<code>for()</code> increments <code>i</code> variable until <code>4</code>. Then JavaScript enters one time the block <code>{ numbers.push(i + 1); }</code>, pushing <code>4 + 1</code> to numbers array.
+					</p>
+					<p>
+						Thus <code>numbers</code> is <code>[5]</code>.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const length = 4;
+			const numbers = [];
+			for (var i = 0; i < length; i++); {
+				numbers.push(i + 1);
+			}
+
+			console.log(numbers);
+		</script>
+	</body>
+</html>
